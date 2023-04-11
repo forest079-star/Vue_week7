@@ -1,0 +1,144 @@
+// 0. 全部載入方式引入
+// @import "bootstrap/scss/functions";
+// @import "./helpers/_variables";
+// @import "bootstrap/scss/bootstrap";
+
+// 1. 首先包含功能函數（這樣你可以操作顏色、SVG、計算等）
+@import "bootstrap/scss/functions";
+
+// 2. 在此包含任何默認變量覆蓋
+// // $pagination-color: $primary;
+// // $pagination-border-color: $primary;
+
+// 3. 包含所需的其餘 Bootstrap 樣式表（包括任何獨立的顏色模式樣式表）
+@import "./helpers/_variables";
+@import "bootstrap/scss/variables-dark";
+
+// 4. 在此包含任何默認映射覆蓋
+
+// 5. 包含所需的其餘部分
+@import "bootstrap/scss/maps";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/root";
+
+// 6. 根據需要選擇性地包含其他部分
+@import "./helpers/utilities";
+
+// 如果要引入bs5 預設顏色群組
+// $all-colors: map-merge-multiple($blues, $indigos, $purples, $pinks, $reds, $oranges, $yellows, $greens, $teals, $cyans);
+$all-colors: map-merge-multiple($purples);
+
+// 自定義 utilities
+$utilities: map-merge(
+  $utilities,
+  (
+    "width": map-merge(map-get($utilities, "width"),
+      (responsive: true,
+        values: map-merge(map-get(map-get($utilities, "width"), "values"),
+          (
+            // "1px": 1px,
+            // "2px": 2px,
+            // "3px": 3px,
+            // "4px": 5px,
+            // "50px": 50px,
+            // "100px":100px,
+            // "5"  : 5%,
+            // "10" : 10%,
+            // "15" : 15%,
+            // "20" : 20%,
+            // "30" : 30%,
+            // "35" : 35%,
+            // "40" : 40%,
+            // "45" : 45%,
+            // "55" : 55%,
+            // "60" : 60%,
+            // "65" : 65%,
+            // "70" : 70%,
+            // "80" : 80%,
+            // "85" : 85%,
+            // "90" : 90%,
+            // "95" : 95%,
+          )),
+      )
+    ),
+    "height": map-merge(map-get($utilities, "height"),
+      (responsive: true,
+        values: map-merge(map-get(map-get($utilities, "height"), "values"),
+          (
+            "auto": auto,
+            "100vh":100vh,
+            "0":0,
+          )),
+      )
+    ),
+    "color": map-merge(map-get($utilities, "color"),
+      (responsive: true,
+        values: map-merge(map-get(map-get($utilities, "color"), "values"),
+          (
+          "word": #776e72,
+          "black-50": rgba($black, .5), // deprecated
+          "black-70": rgba($black, .7), // deprecated
+          "white-50": rgba($white, .5), // deprecated
+          "white-70": rgba($white, .7), // deprecated
+          "reset": inherit,
+        )),
+      )
+    ),
+    // "color": map-merge(
+    //   map-get($utilities, "color"),
+    //   (
+    //     values: map-merge(
+    //       map-get(map-get($utilities, "color"), "values"),
+    //       (
+    //         $all-colors // 載入上方 map-merge-multiple() 預設顏色層級 100~900
+    //       ),
+    //     ),
+    //   ),
+    // ),
+  )
+);
+
+
+
+@import "bootstrap/scss/reboot";
+@import "bootstrap/scss/type";
+@import "bootstrap/scss/images";
+@import "bootstrap/scss/containers";
+@import "bootstrap/scss/grid";
+@import "bootstrap/scss/tables";
+@import "bootstrap/scss/forms";
+@import "bootstrap/scss/buttons";
+@import "bootstrap/scss/transitions";
+@import "bootstrap/scss/dropdown";
+@import "bootstrap/scss/button-group";
+@import "bootstrap/scss/nav";
+@import "bootstrap/scss/navbar";
+@import "bootstrap/scss/card";
+@import "bootstrap/scss/accordion";
+@import "bootstrap/scss/breadcrumb";
+@import "bootstrap/scss/pagination";
+@import "bootstrap/scss/badge";
+@import "bootstrap/scss/alert";
+@import "bootstrap/scss/progress";
+@import "bootstrap/scss/list-group";
+@import "bootstrap/scss/close";
+@import "bootstrap/scss/toasts";
+@import "bootstrap/scss/modal";
+@import "bootstrap/scss/tooltip";
+@import "bootstrap/scss/popover";
+@import "bootstrap/scss/carousel";
+@import "bootstrap/scss/spinners";
+@import "bootstrap/scss/offcanvas";
+@import "bootstrap/scss/placeholders";
+@import "bootstrap/scss/helpers";
+
+// 7. 最後選擇性地包含實用程序 API，根據 _utilities.scss 中的 Sass 映射生成類
+@import "bootstrap/scss/utilities/api";
+
+// 8. 在此添加其他自定義代碼
+
+
+
+
+
+
