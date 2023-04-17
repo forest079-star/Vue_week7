@@ -57,7 +57,7 @@
       },
       checkLogin(){
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)ryanpro\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        
+        // console.log(token);
         const url = `${VITE_URL}/api/user/check`;
         if(token){
           this.axios.defaults.headers.common.Authorization = token;

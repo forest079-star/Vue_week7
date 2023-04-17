@@ -32,7 +32,7 @@
 
 <script>
 const {VITE_URL} = import.meta.env
-export default {
+export default {   
   data() {
     return {
       user:{
