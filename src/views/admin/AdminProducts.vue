@@ -35,7 +35,7 @@
       </tbody>
     </table>
     <div class="d-flex justify-content-center mt-4">
-      <nav aria-label="Page navigation example">
+      <!-- <nav aria-label="Page navigation example">
         <ul class="pagination">
 
           <li class="page-item" :class="{ disabled: !pagination.has_pre }">
@@ -58,7 +58,8 @@
           </li>
 
         </ul>
-      </nav>
+      </nav> -->
+      <PaginationView :pagination="pagination" @change-page="getProducts" :isLoading="isLoading"></PaginationView>
     </div>
   </div>
 
@@ -192,7 +193,7 @@
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p class="fs-6">請確認刪除此產品？</p>
+          <p class="fs-6">是否要刪除<span class="text-danger mx-1 fw-bold">{{ temProduct.title }}</span>(刪除後將無法恢復)。</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-gray" @click="cancelProduct">取消</button>
@@ -204,6 +205,7 @@
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin';
+import PaginationView from '@/components/PaginationView.vue';
 import Modal from "bootstrap/js/dist/modal";
 
 // data
@@ -225,6 +227,9 @@ export default {
       isNew: false,
       productCategories: {},
     }
+  },
+  components: {
+    PaginationView
   },
   // mixins: [modalMixin],
   methods: {

@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import{ Collapse } from 'bootstrap/js/dist/collapse'
 
 import './style.css'
 import './assets/all.scss'
@@ -15,5 +16,6 @@ const app = createApp(App)
   .use(pinia)
   .use(router)
   .use(VueAxios, axios)
+  .use(Collapse)
 
 app.mount('#app')
