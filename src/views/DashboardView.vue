@@ -56,11 +56,15 @@
         this.$router.push('/login');
       },
       checkLogin(){
+        // 取得cookie
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)ryanpro\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-        // console.log(token);
+        // console.log('token: ', token);
         const url = `${VITE_URL}/api/user/check`;
+        // 判斷cookie是否存在
         if(token){
+          // 設定header
           this.axios.defaults.headers.common.Authorization = token;
+          // 呼叫後端驗證
           this.axios.post(url).then((res) => {
             if (res.data.success == false) {
               alert('您尚未登入請重新登入');

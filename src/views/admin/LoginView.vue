@@ -59,10 +59,12 @@ export default {
           sessionStorage.setItem('ryanpro', token);
           // 跳轉到後台首頁
           this.$router.push('/admin/products');
-        } else {
-          alert(response.data.message);
-        }
-      });
+        } 
+      })
+      .catch((error) => {
+        console.log(error);
+          alert(error.response.data.message);
+        });
     },
   },
 }
