@@ -48,17 +48,16 @@
 
 </template>
 <script>
-import modalMixin from '@/mixins/modalMixin';
-import PaginationView from '@/components/PaginationView.vue';
-import DelModal from '@/components/DelModal.vue';
-import ProductModal from '@/components/ProductModal.vue';
-import Modal from "bootstrap/js/dist/modal";
+import PaginationView from '@/components/PaginationView.vue'
+import DelModal from '@/components/DelModal.vue'
+import ProductModal from '@/components/ProductModal.vue'
+import Modal from 'bootstrap/js/dist/modal'
 
 // data
 import { productFormData } from '@/data/adminFormData.js'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
-  data() {
+  data () {
     return {
       isLoading: false,
       products: [],
@@ -70,7 +69,7 @@ export default {
       pagination: {},
       delModal: '',
       isNew: false,
-      productCategories: {},
+      productCategories: {}
     }
   },
   components: {
@@ -79,11 +78,11 @@ export default {
     DelModal
   },
   methods: {
-    getProducts(page = 1) {
-      this.isLoading = true;
+    getProducts (page = 1) {
+      this.isLoading = true
       const api = `${VITE_URL}/api/${VITE_PATH}/admin/products/?page=${page}`
       this.axios.get(api).then((res) => {
-        console.log("🚀 ~ file: res.data:", res.data.products)
+        console.log('🚀 ~ file: res.data:', res.data)
         if (res.data.success) {
           this.products = res.data.products
           this.pagination = res.data.pagination
@@ -97,10 +96,10 @@ export default {
         this.$router.push('/login')
       })
         .finally(() => {
-          this.isLoading = false; // 無論成功或失敗，請求完成後將 isLoading 設為 false
-        });
+          this.isLoading = false // 無論成功或失敗，請求完成後將 isLoading 設為 false
+        })
     },
-    openModal(event, item) {
+    openModal (event, item) {
       if (event === 'new') {
         this.isNew = true
         this.temProduct = { imagesUrl: [] }
@@ -110,7 +109,7 @@ export default {
       } else if (event === 'edit') {
         this.isNew = false
         this.temProduct = { ...item }
-        console.log("🚀 ~ file: this.temProduct:", this.temProduct);
+        console.log('🚀 ~ file: this.temProduct:', this.temProduct)
         this.$refs.productModal.openModal()
       } else if (event === 'delete') {
         this.isNew = false
@@ -123,35 +122,35 @@ export default {
     //   console.log("cancelProduct", this.temProduct);
     //   this.modal.hide();
     // },
-    handleCancelProduct(action) {
+    handleCancelProduct (action) {
       if (action === 'edit' || action === 'new') {
-        this.cancelProductForEditNew();
+        this.cancelProductForEditNew()
       } else if (action === 'del') {
-        this.cancelProductForDel();
+        this.cancelProductForDel()
       }
     },
-    cancelProductForEditNew() {
-      this.temProduct = { imagesUrl: [] };
-      console.log("cancelProduct", this.temProduct);
-      this.$refs.productModal.hideModal();
+    cancelProductForEditNew () {
+      this.temProduct = { imagesUrl: [] }
+      console.log('cancelProduct', this.temProduct)
+      this.$refs.productModal.hideModal()
     },
-    cancelProductForDel() {
-      this.temProduct = { imagesUrl: [] };
-      console.log("cancelProduct", this.temProduct);
-      this.$refs.delModal.hideModal();
-    }, 
-    createModal(refName) {
+    cancelProductForDel () {
+      this.temProduct = { imagesUrl: [] }
+      console.log('cancelProduct', this.temProduct)
+      this.$refs.delModal.hideModal()
+    },
+    createModal (refName) {
       this.modal = new Modal(this.$refs[refName], {
         backdrop: 'static',
-        keyboard: false,
-      });
+        keyboard: false
+      })
     },
-    updateProduct() {
-      let api = `${VITE_URL}/api/${VITE_PATH}/admin/product`;
-      let httpMethod = 'post';
+    updateProduct () {
+      let api = `${VITE_URL}/api/${VITE_PATH}/admin/product`
+      let httpMethod = 'post'
       if (!this.isNew) {
-        api = `${VITE_URL}/api/${VITE_PATH}/admin/product/${this.temProduct.id}`;
-        httpMethod = 'put';
+        api = `${VITE_URL}/api/${VITE_PATH}/admin/product/${this.temProduct.id}`
+        httpMethod = 'put'
       }
       // 更新後 刪除 temProduct.tempImage 圖片
       this.temProduct.tempImage = ''
@@ -159,55 +158,54 @@ export default {
         if (res.data.success) {
           this.temProduct = {
             imagesUrl: [],
-            tempImage: ""
+            tempImage: ''
           }
-          this.getProducts();
-          alert(res.data.message);
+          this.getProducts()
+          alert(res.data.message)
           // this.modal.hide();
           this.$refs.productModal.hideModal()
         } else {
-          alert(res.data.message);
+          alert(res.data.message)
         }
       }).catch((error) => {
-        console.log(error.response.data.message);
-        alert(error.response.data.message);
-      });
+        console.log(error.response.data.message)
+        alert(error.response.data.message)
+      })
     },
-    delProduct() {
-      const url = `${VITE_URL}/api/${VITE_PATH}/admin/product/${this.temProduct.id}`;
+    delProduct () {
+      const url = `${VITE_URL}/api/${VITE_PATH}/admin/product/${this.temProduct.id}`
       this.axios.delete(url).then((res) => {
         if (res.data.success) {
-          alert(res.data.message);
-          this.getProducts();
-          this.$refs.delModal.openModal()
+          alert(res.data.message)
+          this.getProducts()
+          this.$refs.delModal.hideModal()
           // this.modal.hide();
         } else {
-          alert(res.data.message);
+          alert(res.data.message)
         }
       }).catch((error) => {
-        console.log(error.response);
-        alert(error.response.data.message);
-      });
-    },
+        console.log(error.response)
+        alert(error.response.data.message)
+      })
+    }
   },
-  mounted() {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)ryanpro\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-    this.axios.defaults.headers.common.Authorization = token;
-    this.getProducts();
+  mounted () {
+    const token = document.cookie.replace(/(?:(?:^|.*;\s*)ryanpro\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    this.axios.defaults.headers.common.Authorization = token
+    this.getProducts()
 
-    this.productCategories = productFormData.productCategories;
-
+    this.productCategories = productFormData.productCategories
   },
   computed: {
     isEnabled: {
-      get() {
-        return this.temProduct.is_enabled === 1 || this.temProduct.is_enabled === true;
+      get () {
+        return this.temProduct.is_enabled === 1 || this.temProduct.is_enabled === true
       },
-      set(newValue) {
+      set (newValue) {
         if (typeof newValue === 'boolean') {
-          this.temProduct.is_enabled = newValue ? 1 : 0;
+          this.temProduct.is_enabled = newValue ? 1 : 0
         } else {
-          throw new Error('isEnabled accepts only boolean values');
+          throw new Error('isEnabled accepts only boolean values')
         }
       }
     }

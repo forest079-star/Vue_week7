@@ -7,10 +7,10 @@
 </template>
 
 <script>
-  import { RouterView } from 'vue-router'
-  export default {
-    comments: {
-      RouterView
-    }
+import { RouterView } from 'vue-router'
+export default {
+  comments: {
+    RouterView
   }
+}
 </script>

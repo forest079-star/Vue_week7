@@ -8,14 +8,14 @@
 </template>
 
 <script>
-  export default {
-    name: 'HelloWorld',
-    data() {
-      return {
-        count: 0
-      }
+export default {
+  name: 'HelloWorld',
+  data () {
+    return {
+      count: 0
     }
   }
+}
 </script>
 
 <style scoped>

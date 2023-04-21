@@ -1,20 +1,21 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 
-import axios from 'axios';
-import VueAxios from 'vue-axios';
-import { Collapse } from 'bootstrap/js/dist/collapse';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import { Collapse } from 'bootstrap/js/dist/collapse'
 
-import './style.css';
-import './assets/all.scss';
-import App from './App.vue';
-import router from './router';
+import './style.css'
+import './assets/all.scss'
+import App from './App.vue'
+import router from './router'
 
-const pinia = createPinia();
+const pinia = createPinia()
 
 const app = createApp(App)
   .use(pinia)
   .use(router)
+  .use(Collapse)
   .use(VueAxios, axios)
 
-app.mount('#app');
+app.mount('#app')

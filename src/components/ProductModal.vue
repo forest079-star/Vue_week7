@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-    ref="model">
+    ref="modal">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header bg-dark text-white">
@@ -42,7 +42,7 @@
                 </div>
               </template>
               <div v-else>
-                <button class="btn btn-outline-primary btn-sm d-block w-100" 
+                <button class="btn btn-outline-primary btn-sm d-block w-100"
                 @click="() => temProduct.imagesUrl.push('')">
                   新增圖片
                 </button>
@@ -119,8 +119,8 @@
   </div>
 </template>
 <script>
-const { VITE_PATH, VITE_URL } = import.meta.env;
-import modalMixin from '@/mixins/modalMixin';
+import modalMixin from '@/mixins/modalMixin'
+const { VITE_PATH, VITE_URL } = import.meta.env
 export default {
   props: {
     isNew: {},
@@ -145,72 +145,71 @@ export default {
       default: false
     }
   },
-  data() {
+  data () {
     return {
       temProduct: {
         imagesUrl: [],
         tempImage: ''
       },
       modal: '',
-      imgUploading: false,
+      imgUploading: false
     }
   },
   mixins: [modalMixin],
-  emits:['update-product','cancel-product','update:is-enabled'],
+  emits: ['update-product', 'cancel-product', 'update:is-enabled'],
   watch: {
-    product() {
-      this.temProduct = this.product;
+    product () {
+      this.temProduct = this.product
       if (!this.temProduct.imagesUrl) {
-        this.temProduct.imagesUrl = [];
+        this.temProduct.imagesUrl = []
       }
       if (!this.temProduct.tempImage) {
-        this.temProduct.tempImage = '';
+        this.temProduct.tempImage = ''
       }
     },
-    isEnabled() {
-      this.temProduct.is_enabled = this.isEnabled;
+    isEnabled () {
+      this.temProduct.is_enabled = this.isEnabled
     }
   },
   methods: {
-    onIsEnabledChange(event) {
-      this.$emit('update:is-enabled', event.target.checked);
+    onIsEnabledChange (event) {
+      this.$emit('update:is-enabled', event.target.checked)
     },
-    uploadFile() {
+    uploadFile () {
       // 取得第一個檔案
-      const uploadedFile = this.$refs.file.files[0];
+      const uploadedFile = this.$refs.file.files[0]
       // 建立一個新的 FormData 物件
-      const formData = new FormData();
+      const formData = new FormData()
       // 將檔案加入到 form data
-      formData.append('file-to-upload', uploadedFile);
+      formData.append('file-to-upload', uploadedFile)
       // 設定上傳中的狀態為 true
-      this.imgUploading = true;
+      this.imgUploading = true
       // 建立 URL
-      const url = `${VITE_URL}/api/${VITE_PATH}/admin/upload`;
+      const url = `${VITE_URL}/api/${VITE_PATH}/admin/upload`
       // 發送 POST 請求到 URL
       this.axios.post(url, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+          'Content-Type': 'multipart/form-data'
+        }
       }).then((res) => {
         // 處理回應
         if (res.data.success) {
-          this.imgUploading = false;
+          this.imgUploading = false
           this.temProduct.tempImage = res.data.imageUrl
-          this.$refs.file.value = '';
+          this.$refs.file.value = ''
           // this.temProduct.tempImage = '';
         } else {
-          this.$refs.file.value = '';
-          alert(res.data.message);
+          this.$refs.file.value = ''
+          alert(res.data.message)
         }
-
       }).catch((error) => {
         // 處理錯誤
-        console.log(error.response);
-        alert(error.response.message);
-        this.imgUploading = false;
-      });
-    },
-  },
+        console.log(error.response)
+        alert(error.response.message)
+        this.imgUploading = false
+      })
+    }
+  }
 
 }
 </script>

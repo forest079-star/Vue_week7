@@ -9,7 +9,7 @@ export const productFormData = {
       '嬰兒睡衣',
       '帽子與圍巾',
       '襪子與鞋子',
-      '內衣與背心',
+      '內衣與背心'
     ],
     toddlerCategories: [
       '童裝上衣',
@@ -20,12 +20,12 @@ export const productFormData = {
       '童裝襪子',
       '童裝帽子',
       '童裝鞋子',
-      '童裝內衣',
+      '童裝內衣'
     ],
-    areaCategories: [],
-  },
-};
+    areaCategories: []
+  }
+}
 
 export const orderFormData = {
-  orderState: ['未處理', '處理中', '已完成'],
-};
+  orderState: ['未處理', '處理中', '已完成']
+}

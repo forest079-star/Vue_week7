@@ -27,12 +27,12 @@
 
 <script>
 export default {
-  props:['pagination' , 'isLoading'],
+  props: ['pagination', 'isLoading'],
   methods: {
-    updatePage(page){
+    updatePage (page) {
       this.$emit('change-page', page)
     }
-  },
+  }
 
 }
 </script>

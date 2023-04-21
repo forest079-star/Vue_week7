@@ -10,7 +10,7 @@ export default {}
 
 <style scoped>
   .header{
-    
+
   }
-  
+
 </style>

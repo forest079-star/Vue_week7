@@ -1,6 +1,6 @@
 <template>
   <div class="modal fade" id="delProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
-      ref="model">
+      ref="modal">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
@@ -21,19 +21,19 @@
     </div>
 </template>
 <script>
-const { VITE_PATH, VITE_URL } = import.meta.env
-import modalMixin from '@/mixins/modalMixin';
+import modalMixin from '@/mixins/modalMixin'
+// const { VITE_PATH, VITE_URL } = import.meta.env
 export default {
   props: ['temProduct'],
-  data() {
+  data () {
     return {
-      modal: '',
+      modal: ''
     }
   },
   emits: ['cancel-product', 'del-product'],
-  mixins: [modalMixin],
+  mixins: [modalMixin]
 }
 </script>
 <style lang="scss">
-  
+
 </style>

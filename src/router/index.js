@@ -12,8 +12,8 @@ const routes = [
       {
         path: '/user/home',
         name: 'Home',
-        component: () => import('../views/front/HomeView.vue'),
-      },
+        component: () => import('../views/front/HomeView.vue')
+      }
     ]
   },
   {
@@ -32,10 +32,13 @@ const routes = [
         path: 'coupons',
         component: () => import('../views/admin/AdminCoupons.vue')
       },
-      
+      {
+        path: 'articles',
+        component: () => import('../views/admin/AdminArticles.vue')
+      }
     ]
-  },
-];
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(),

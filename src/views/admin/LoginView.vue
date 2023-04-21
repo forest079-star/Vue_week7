@@ -31,42 +31,41 @@
 </template>
 
 <script>
-const {VITE_URL} = import.meta.env
-export default {   
-  data() {
+const { VITE_URL } = import.meta.env
+export default {
+  data () {
     return {
-      user:{
-        username:'',
-        password:''
+      user: {
+        username: '',
+        password: ''
       }
     }
   },
   methods: {
     // 登入功能
-    login() {
-      const api = `${VITE_URL}/v2/admin/signin`;
+    login () {
+      const api = `${VITE_URL}/v2/admin/signin`
 
       this.axios.post(api, this.user).then((response) => {
-        console.log(response);
+        console.log(response)
         if (response.data.success) {
-          const token = response.data.token;
-          const expired = response.data.expired;
+          const { token, expired } = response.data
           // 將 token 存入 cookie
-          document.cookie = `ryanpro=${token}; expires=${new Date(expired)};`;
-          // 將 token 存入 localStorage
-          localStorage.setItem('ryanpro', token);
-          // 將 token 存入 sessionStorage
-          sessionStorage.setItem('ryanpro', token);
+          document.cookie = `ryanpro=${token}; expires=${new Date(expired)};`
+          // // 將 token 存入 localStorage
+          // localStorage.setItem('ryanpro', token)
+          // // 將 token 存入 sessionStorage
+          // sessionStorage.setItem('ryanpro', token)
           // 跳轉到後台首頁
-          this.$router.push('/admin/products');
-        } 
+          this.$router.push('/admin/products')
+        }
       })
-      .catch((error) => {
-        console.log(error);
-          alert(error.response.data.message);
-        });
-    },
-  },
+        .catch((error) => {
+          console.log(error)
+          alert(error.response.data.message)
+        })
+    }
+  }
 }
 </script>
 <style>
