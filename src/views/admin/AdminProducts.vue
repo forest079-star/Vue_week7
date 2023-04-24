@@ -191,6 +191,7 @@ export default {
   },
   mounted () {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)ryanpro\s*=\s*([^;]*).*$)|^.*$/, '$1')
+    console.log(token)
     this.axios.defaults.headers.common.Authorization = token
     this.getProducts()
 

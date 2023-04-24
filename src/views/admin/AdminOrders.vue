@@ -15,7 +15,7 @@
     </thead>
     <tbody>
       <tr v-for="item in orders" :key="item.id">
-        <td>{{ item.orderDate }}</td>
+        <td>{{ $filters.date(item.create_at) }}</td>
         <td>{{ item.user.email }}</td>
         <td class="d-none d-sm-table-cell">
           <ul class="list-unstyled">
@@ -32,7 +32,7 @@
         <td class="d-none d-sm-table-cell"> $ {{ item.total }}</td>
         <td>
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" :id="`paidSwitch${item.id}`" v-model="item.is_paid" />
+            <input class="form-check-input" type="checkbox" :id="`paidSwitch${item.id}`" v-model="item.is_paid" @change="updatePaid(item)" />
             <label class="form-check-label" :for="`paidSwitch${item.id}`">
               <span v-if="item.is_paid">已付款</span>
               <span v-else>未付款</span>
@@ -40,7 +40,7 @@
           </div>
         </td>
         <td>
-          <button type="button" class="btn btn-outline-primary btn-sm me-2" @click="openOrder('edit', item)">編輯</button>
+          <button type="button" class="btn btn-outline-primary btn-sm me-2" @click="openOrder('view', item)">檢視</button>
           <button type="button" class="btn btn-outline-danger btn-sm" @click="openOrder('delete', item)">刪除</button>
         </td>
       </tr>
@@ -50,13 +50,20 @@
     <!-- 分頁 -->
     <PaginationView :pagination="pagination" @change-page="getOrders" :isLoading="isLoading"></PaginationView>
   </div>
+
+  <!-- View Modal -->
+  <OrderModal ref="orderModal" :order="tempOrder" @update-order="updateOrder"  @cancel-product="handleCancelProduct"></OrderModal>
+  <!-- delModal -->
+  <DelModal ref="delModal" :tem-product="tempOrder" @cancel-product="handleCancelProduct" @del-product="deleteOrder"></DelModal>
 </template>
 <script>
 import PaginationView from '@/components/PaginationView.vue'
-// import DelModal from '@/components/DelModal'
+import OrderModal from '@/components/OrderModal.vue'
+import DelModal from '@/components/DelModal.vue'
 
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
+  inject: ['$filters'],
   data () {
     return {
       orders: [],
@@ -66,8 +73,9 @@ export default {
     }
   },
   components: {
-    PaginationView
-    // DelModal,
+    PaginationView,
+    OrderModal,
+    DelModal
   },
   methods: {
     getOrders (page = 1) {
@@ -79,10 +87,93 @@ export default {
           this.orders = res.data.orders
           this.pagination = res.data.pagination
           this.isLoading = false
+          console.log('this.orders', this.orders)
         })
         .catch(error => {
           alert(error.response.data.message)
           this.isLoading = false
+        })
+    },
+    openOrder (action, item) {
+      if (action === 'view') {
+        this.tempOrder = { ...item }
+        this.$refs.orderModal.openModal(item)
+      } else if (action === 'delete') {
+        this.tempOrder = { ...item }
+        console.log('tempOrder', this.tempOrder)
+        this.$refs.delModal.openModal(item)
+      }
+    },
+    deleteOrder () {
+      // console.log('deleteOrder', this.tempOrder)
+      const deleteUrl = `${VITE_URL}/api/${VITE_PATH}/admin/order/${this.tempOrder.id}`
+      this.axios.delete(deleteUrl)
+        .then((res) => {
+          alert(res.data.message)
+          this.$refs.delModal.hideModal()
+          this.getOrders()
+        })
+        .catch(error => {
+          alert(error.response.data.message)
+        })
+    },
+    handleCancelProduct (action) {
+      if (action === 'edit' || action === 'view') {
+        this.cancelProductForEditNew()
+      } else if (action === 'del') {
+        this.cancelProductForDel()
+      }
+    },
+    cancelProductForEditNew () {
+      this.tempOrder = {}
+      console.log('cancelOrderModal', this.tempOrder)
+      this.$refs.orderModal.hideModal()
+    },
+    cancelProductForDel () {
+      this.tempOrder = {}
+      console.log('cancelDelModal', this.tempOrder)
+      this.$refs.delModal.hideModal()
+    },
+    updatePaid (item) {
+      console.log('updatePaid', item)
+      // update-item-edit-time
+      if (item.is_paid) {
+        const paidDate = new Date().toLocaleDateString()
+        item.paid_date = paidDate
+      } else {
+        item.paid_date = ''
+      }
+
+      const paidData = {
+        is_paid: item.is_paid,
+        paid_date: item.paid_date
+      }
+      const updateUrl = `${VITE_URL}/api/${VITE_PATH}/admin/order/${item.id}`
+      this.axios.put(updateUrl, { data: paidData })
+        .then((res) => {
+          alert(res.data.message)
+        })
+        .catch(error => {
+          alert(error.response.data.message)
+        })
+    },
+    updateOrder () {
+      // console.log('updateOrder', this.tempOrder)
+      const updateUrl = `${VITE_URL}/api/${VITE_PATH}/admin/order/${this.tempOrder.id}`
+      if (this.tempOrder.is_paid) {
+        const paidDate = new Date().toLocaleDateString()
+        this.tempOrder.paid_date = paidDate
+      } else {
+        this.tempOrder.paid_date = ''
+      }
+      this.axios.put(updateUrl, { data: this.tempOrder })
+        .then((res) => {
+          alert(res.data.message)
+          this.$refs.orderModal.hideModal()
+          this.getOrders()
+        })
+        .catch(error => {
+          alert(error.response.data.message)
         })
     }
 
