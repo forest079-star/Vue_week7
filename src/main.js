@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import { Collapse } from 'bootstrap/js/dist/collapse'
+// import BSN from 'bootstrap.native'
 
 import './style.css'
 import './assets/all.scss'
@@ -18,8 +19,8 @@ const pinia = createPinia()
 const app = createApp(App)
 
 app.provide('$filters', { date })
-
-  .use(pinia)
+// app.provide('$bsn', BSN)
+app.use(pinia)
   .use(router)
   .use(Collapse)
   .use(VueAxios, axios)

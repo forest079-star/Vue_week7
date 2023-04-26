@@ -67,7 +67,6 @@ export default {
       },
       imgUploading: false,
       pagination: {},
-      delModal: '',
       isNew: false,
       productCategories: {}
     }
