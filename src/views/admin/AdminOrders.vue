@@ -40,7 +40,7 @@
           </div>
         </td>
         <td>
-          <button type="button" class="btn btn-outline-primary btn-sm me-2" @click="openOrder('view', item)">檢視</button>
+          <button type="button" class="btn btn-outline-primary btn-sm me-sm-2" @click="openOrder('view', item)">檢視</button>
           <button type="button" class="btn btn-outline-danger btn-sm" @click="openOrder('delete', item)">刪除</button>
         </td>
       </tr>
@@ -52,7 +52,7 @@
   </div>
 
   <!-- View Modal -->
-  <OrderModal ref="orderModal" :order="tempOrder" @update-order="updateOrder"  @cancel-product="handleCancelProduct"></OrderModal>
+  <OrderModal ref="orderModal" :order="tempOrder" @update-order="updateOrder" @cancel-product="handleCancelProduct" :is-loading="isLoading"></OrderModal>
   <!-- delModal -->
   <DelModal ref="delModal" :tem-product="tempOrder" @cancel-product="handleCancelProduct" @del-product="deleteOrder"></DelModal>
 </template>

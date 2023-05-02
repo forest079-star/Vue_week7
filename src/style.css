@@ -15,7 +15,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
-body { height: 100vh; }
+body { min-height: 100vh; }
 
 
 
@@ -34,6 +34,10 @@ body { height: 100vh; }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    color: #f9f9f9;
+    background-color: #213547;
+  }
+  body{
     color: #f9f9f9;
     background-color: #213547;
   }

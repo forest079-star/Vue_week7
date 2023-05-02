@@ -44,7 +44,7 @@ export default {
   methods: {
     // 登入功能
     login () {
-      const api = `${VITE_URL}/v2/admin/signin`
+      const api = `${VITE_URL}/admin/signin`
 
       this.axios.post(api, this.user).then((response) => {
         console.log(response)

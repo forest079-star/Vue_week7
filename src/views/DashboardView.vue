@@ -25,7 +25,7 @@
               <router-link class="nav-link" to="/admin/articles" @click="collapseNavbar">文章管理</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/user">回到前台</router-link>
+              <router-link class="nav-link" to="/user" >回到前台</router-link>
             </li>
           </ul>
           <form class="d-flex" @submit.prevent="logout">

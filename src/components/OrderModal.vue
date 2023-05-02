@@ -101,7 +101,7 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-gray" data-bs-dismiss="modal" @click="() => $emit('cancel-order')">取消</button>
+            <button type="button" class="btn btn-outline-gray"  @click="$emit('cancel-product', 'view')">取消</button>
             <button type="button" class="btn btn-primary" @click="() => $emit('update-order')">確認</button>
           </div>
         </div>
@@ -114,11 +114,11 @@ import modalMixin from '@/mixins/modalMixin'
 export default {
   inject: ['$filters'],
   props: {
-    order: {}
+    order: {},
+    isLoading: {}
   },
   data () {
     return {
-      isLoading: false,
       modal: '',
       tempOrder: {}
     }

@@ -27,7 +27,7 @@
             <span v-else class="text-success">啟用</span>
           </td>
           <td width="120">
-            <button type="button" class="btn btn-outline-primary btn-sm me-2" @click="openModal('edit', item)">編輯</button>
+            <button type="button" class="btn btn-outline-primary btn-sm me-sm-2" @click="openModal('edit', item)">編輯</button>
             <button type="button" class="btn btn-outline-danger btn-sm" @click="openModal('delete', item)">刪除</button>
           </td>
         </tr>
@@ -122,7 +122,7 @@ export default {
     //   this.modal.hide();
     // },
     handleCancelProduct (action) {
-      if (action === 'edit' || action === 'new') {
+      if (action === 'edit' || action === 'new' || action === 'view') {
         this.cancelProductForEditNew()
       } else if (action === 'del') {
         this.cancelProductForDel()
@@ -130,12 +130,12 @@ export default {
     },
     cancelProductForEditNew () {
       this.temProduct = { imagesUrl: [] }
-      console.log('cancelProduct', this.temProduct)
+      console.log('cancelEditProduct', this.temProduct)
       this.$refs.productModal.hideModal()
     },
     cancelProductForDel () {
       this.temProduct = { imagesUrl: [] }
-      console.log('cancelProduct', this.temProduct)
+      console.log('cancelDelProduct', this.temProduct)
       this.$refs.delModal.hideModal()
     },
     createModal (refName) {
