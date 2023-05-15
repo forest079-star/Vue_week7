@@ -3,7 +3,12 @@ import { createPinia } from 'pinia'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-// import { Collapse } from 'bootstrap/js/dist/collapse'
+// 加入 CKEditor
+import CKEditor from '@ckeditor/ckeditor5-vue'
+
+// this.$Loading.config(import Loading from 'vue-loading-overlay'
+// import Loading from 'vue-loading-overlay'
+// import 'vue-loading-overlay/dist/css/index.css'
 
 import './style.css'
 import './assets/all.scss'
@@ -17,10 +22,13 @@ const pinia = createPinia()
 
 const app = createApp(App)
 
-app.provide('$filters', { date })
+app
+  .provide('$filters', { date })
   .use(pinia)
   .use(router)
-  // .use(Collapse)
+  .use(CKEditor)
   .use(VueAxios, axios)
+  // .use(Loading.LoadingPlugin)
+  // .component('Loading', Loading.Component)
 
 app.mount('#app')

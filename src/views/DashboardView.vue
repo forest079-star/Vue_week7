@@ -28,6 +28,11 @@
               <router-link class="nav-link" to="/user" >回到前台</router-link>
             </li>
           </ul>
+          <ul class="navbar-nav mb-2 me-3 mb-lg-0">
+            <li class="nav-item">
+              <router-link class="nav-link" to="/user/articles" @click="collapseNavbar">Blog</router-link>
+            </li>
+          </ul>
           <form class="d-flex" @submit.prevent="logout">
             <button class="btn btn-outline-primary flex-shrink-0" type="submit">登出</button>
           </form>

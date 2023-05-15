@@ -1,4 +1,5 @@
 <template>
+  <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage"></Loading>
   <div>
     <div class="d-flex justify-content-between align-content-center mt-4">
       <p>本頁有{{ products.length }}項產品</p>
@@ -53,6 +54,9 @@ import DelModal from '@/components/DelModal.vue'
 import ProductModal from '@/components/ProductModal.vue'
 import Modal from 'bootstrap/js/dist/modal'
 
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+
 // data
 import { productFormData } from '@/data/adminFormData.js'
 const { VITE_URL, VITE_PATH } = import.meta.env
@@ -65,6 +69,7 @@ export default {
         imagesUrl: [],
         tempImage: ''
       },
+      fullPage: true,
       imgUploading: false,
       pagination: {},
       isNew: false,
@@ -74,7 +79,8 @@ export default {
   components: {
     PaginationView,
     ProductModal,
-    DelModal
+    DelModal,
+    Loading
   },
   methods: {
     getProducts (page = 1) {

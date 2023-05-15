@@ -10,9 +10,19 @@ const routes = [
     component: () => import('../views/FrontLayout.vue'),
     children: [
       {
-        path: '/user/home',
+        path: 'home',
         name: 'Home',
         component: () => import('../views/front/HomeView.vue')
+      },
+      {
+        path: 'articles',
+        name: 'articles',
+        component: () => import('../views/front/articlesView.vue')
+      },
+      {
+        path: 'article/:articleId',
+        name: 'article',
+        component: () => import('../views/front/articleView.vue')
       }
     ]
   },
