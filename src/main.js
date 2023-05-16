@@ -15,9 +15,7 @@ import router from './router'
 import { date, unixTime } from './methods/filters'
 
 const pinia = createPinia()
-
 const app = createApp(App)
-
 // app.config.globalProperties.$filters = {
 //   date,
 //   currency,

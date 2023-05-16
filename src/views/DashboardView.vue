@@ -50,7 +50,6 @@ import Collapse from 'bootstrap/js/dist/collapse'
 import { Toast } from '@/methods/swalToast'
 const { VITE_URL } = import.meta.env
 export default {
-  // inject: ['$bsn'],
   data () {
     return {
       checkSuccess: false,

@@ -6,7 +6,7 @@ const routes = [
     component: () => import('../views/admin/LoginView.vue')
   },
   {
-    path: '/user',
+    path: '/',
     component: () => import('../views/FrontLayout.vue'),
     children: [
       {
@@ -32,21 +32,30 @@ const routes = [
     children: [
       {
         path: 'products',
+        name: 'Products',
         component: () => import('../views/admin/AdminProducts.vue')
       },
       {
         path: 'orders',
+        name: 'Orders',
         component: () => import('../views/admin/AdminOrders.vue')
       },
       {
         path: 'coupons',
+        name: 'Coupons',
         component: () => import('../views/admin/AdminCoupons.vue')
       },
       {
         path: 'articles',
+        name: 'Articles',
         component: () => import('../views/admin/AdminArticles.vue')
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)',
+    name: '404',
+    component: () => import('@/views/NotFront.vue')
   }
 ]
 
