@@ -47,6 +47,7 @@
 <script>
 import { RouterView } from 'vue-router'
 import Collapse from 'bootstrap/js/dist/collapse'
+import { Toast } from '@/methods/swalToast'
 const { VITE_URL } = import.meta.env
 export default {
   // inject: ['$bsn'],
@@ -77,11 +78,17 @@ export default {
           })
           .catch((err) => {
             console.log(err)
-            alert('您尚未登入請重新登入')
-            // this.$router.push('/login')
+            Toast.fire({
+              icon: 'error',
+              title: err.data.message
+            })
+            this.$router.push('/login')
           })
       } else {
-        alert('您尚未登入請重新登入')
+        Toast.fire({
+          icon: 'error',
+          title: '驗證錯誤, 請重新登入'
+        })
         this.$router.push('/login')
       }
     },

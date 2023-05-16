@@ -1,4 +1,5 @@
 <template>
+  <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage"></Loading>
   <div class="d-flex justify-content-between align-content-center mt-4">
     <p>本頁有{{ orders.length }}筆訂單</p>
   </div>
@@ -61,6 +62,11 @@ import PaginationView from '@/components/PaginationView.vue'
 import OrderModal from '@/components/OrderModal.vue'
 import DelModal from '@/components/DelModal.vue'
 
+import { Toast } from '@/methods/swalToast'
+
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
+
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   inject: ['$filters'],
@@ -69,13 +75,15 @@ export default {
       orders: [],
       pagination: {},
       isLoading: false,
+      fullPage: true,
       tempOrder: {}
     }
   },
   components: {
     PaginationView,
     OrderModal,
-    DelModal
+    DelModal,
+    Loading
   },
   methods: {
     getOrders (page = 1) {
@@ -90,7 +98,11 @@ export default {
           console.log('this.orders', this.orders)
         })
         .catch(error => {
-          alert(error.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+          // alert(error.response.data.message)
           this.isLoading = false
         })
     },
@@ -109,12 +121,20 @@ export default {
       const deleteUrl = `${VITE_URL}/api/${VITE_PATH}/admin/order/${this.tempOrder.id}`
       this.axios.delete(deleteUrl)
         .then((res) => {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'success',
+            title: res.data.message
+          })
+          // alert(res.data.message)
           this.$refs.delModal.hideModal()
           this.getOrders()
         })
         .catch(error => {
-          alert(error.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+          // alert(error.response.data.message)
         })
     },
     handleCancelProduct (action) {
@@ -151,10 +171,19 @@ export default {
       const updateUrl = `${VITE_URL}/api/${VITE_PATH}/admin/order/${item.id}`
       this.axios.put(updateUrl, { data: paidData })
         .then((res) => {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'success',
+            title: res.data.message
+          })
+          // alert(res.data.message)
+          this.getOrders()
         })
         .catch(error => {
-          alert(error.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+          // alert(error.response.data.message)
         })
     },
     updateOrder () {
@@ -168,12 +197,20 @@ export default {
       }
       this.axios.put(updateUrl, { data: this.tempOrder })
         .then((res) => {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'success',
+            title: res.data.message
+          })
+          // alert(res.data.message)
           this.$refs.orderModal.hideModal()
           this.getOrders()
         })
         .catch(error => {
-          alert(error.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+          // alert(error.response.data.message)
         })
     }
 

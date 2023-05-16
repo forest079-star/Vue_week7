@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { Toast } from '@/methods/swalToast'
 const { VITE_URL } = import.meta.env
 export default {
   data () {
@@ -62,7 +63,11 @@ export default {
       })
         .catch((error) => {
           console.log(error)
-          alert(error.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: error.response.data.message
+          })
+          // alert(error.response.data.message)
         })
     }
   }

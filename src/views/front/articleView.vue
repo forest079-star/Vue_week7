@@ -1,4 +1,5 @@
 <template>
+  <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage"></Loading>
   <div class="container">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -20,12 +21,15 @@
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 const { VITE_PATH, VITE_URL } = import.meta.env
 export default {
   data () {
     return {
       article: {},
-      isLoading: false
+      isLoading: false,
+      fullPage: true
     }
   },
   inject: ['$filters'],
@@ -38,10 +42,13 @@ export default {
         this.article = response.data.article
         this.isLoading = false
       }).catch((error) => {
+        console.log(error)
         this.isLoading = false
-        this.$httpMessageState(error.response, '錯誤訊息')
       })
     }
+  },
+  components: {
+    Loading
   },
   mounted () {
     this.getArticle(this.$route.params.articleId)

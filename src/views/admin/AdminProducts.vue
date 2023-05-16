@@ -54,6 +54,8 @@ import DelModal from '@/components/DelModal.vue'
 import ProductModal from '@/components/ProductModal.vue'
 import Modal from 'bootstrap/js/dist/modal'
 
+import { Toast } from '@/methods/swalToast'
+
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/css/index.css'
 
@@ -89,15 +91,25 @@ export default {
       this.axios.get(api).then((res) => {
         console.log('🚀 ~ file: res.data:', res.data)
         if (res.data.success) {
+          this.isLoading = false
           this.products = res.data.products
           this.pagination = res.data.pagination
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'success',
+            position: 'top-end',
+            title: res.data.message
+          })
+          // alert(res.data.message)
           this.$router.push('/login')
         }
       }).catch((error) => {
         console.log(error.response)
-        alert(error.response.data.message)
+        Toast.fire({
+          icon: 'error',
+          title: error.response.data.message
+        })
+        // alert(error.response.data.message)
         this.$router.push('/login')
       })
         .finally(() => {
@@ -161,14 +173,18 @@ export default {
       this.temProduct.tempImage = ''
       this.axios[httpMethod](api, { data: this.temProduct }).then((res) => {
         if (res.data.success) {
+          // alert(res.data.message)
+          Toast.fire({
+            icon: 'success',
+            title: res.data.message
+          })
           this.temProduct = {
             imagesUrl: [],
             tempImage: ''
           }
-          this.getProducts()
-          alert(res.data.message)
           // this.modal.hide();
           this.$refs.productModal.hideModal()
+          this.getProducts()
         } else {
           alert(res.data.message)
         }
@@ -181,16 +197,30 @@ export default {
       const url = `${VITE_URL}/api/${VITE_PATH}/admin/product/${this.temProduct.id}`
       this.axios.delete(url).then((res) => {
         if (res.data.success) {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'success',
+            color: 'red',
+            iconColor: 'red',
+            title: res.data.message
+          })
+          // alert(res.data.message)
           this.getProducts()
           this.$refs.delModal.hideModal()
           // this.modal.hide();
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: res.data.message
+          })
+          // alert(res.data.message)
         }
       }).catch((error) => {
         console.log(error.response)
-        alert(error.response.data.message)
+        Toast.fire({
+          icon: 'error',
+          title: error.response.data.message
+        })
+        // alert(error.response.data.message)
       })
     }
   },

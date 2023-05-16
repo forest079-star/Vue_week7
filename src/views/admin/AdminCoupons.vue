@@ -1,4 +1,5 @@
 <template>
+  <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage"></Loading>
   <div class="mt-4">
     <div class="d-flex justify-content-between">
       <p class="mb-0 px-2">本頁有 <span>{{ coupons.length }}</span> 項產品</p>
@@ -50,6 +51,11 @@
 import PaginationView from '@/components/PaginationView.vue'
 import CouponModal from '../../components/CouponModal.vue'
 import DelModal from '@/components/DelModal.vue'
+
+import { Toast } from '@/methods/swalToast'
+
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 const { VITE_PATH, VITE_URL } = import.meta.env
 export default {
   inject: ['$filters'],
@@ -58,6 +64,7 @@ export default {
       coupons: [],
       pagination: {},
       isLoading: false,
+      fullPage: true,
       temCoupon: {},
       isNew: false,
       isEnabled: false
@@ -66,7 +73,8 @@ export default {
   components: {
     PaginationView,
     CouponModal,
-    DelModal
+    DelModal,
+    Loading
   },
   methods: {
     getCoupons (page = 1) {
@@ -102,7 +110,11 @@ export default {
 
     updateCoupon () {
       if (this.temCoupon.percent > 100 || this.temCoupon.percent < 0) {
-        alert('折扣百分比需介於0~100之間')
+        Toast.fire({
+          icon: 'error',
+          title: '折扣百分比需介於0~100之間'
+        })
+        // alert('折扣百分比需介於0~100之間')
         return
       }
       let url = `${VITE_URL}/api/${VITE_PATH}/admin/coupon`
@@ -113,15 +125,27 @@ export default {
       }
       this.axios[httpMethod](url, { data: this.temCoupon }).then((res) => {
         if (res.data.success) {
-          alert('優惠券已更新')
+          Toast.fire({
+            icon: 'success',
+            title: '優惠券已更新'
+          })
+          // alert('優惠券已更新')
           this.$refs.couponModal.hideModal()
           this.getCoupons()
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: res.data.message
+          })
+          // alert(res.data.message)
         }
       })
         .catch((err) => {
-          console.log(err.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: err.response.data.message
+          })
+          // console.log(err.response.data.message)
         })
     },
 
@@ -130,15 +154,27 @@ export default {
       this.axios.delete(url).then((res) => {
         console.log(res.data)
         if (res.data.success) {
-          alert('優惠券已刪除')
+          Toast.fire({
+            icon: 'success',
+            title: '優惠券已刪除'
+          })
+          // alert('優惠券已刪除')
           this.$refs.delModal.hideModal()
           this.getCoupons()
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: res.data.message
+          })
+          // alert(res.data.message)
         }
       })
         .catch((err) => {
-          console.log(err.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: err.response.data.message
+          })
+          // console.log(err.response.data.message)
         })
     },
     handleCancelProduct (action) {

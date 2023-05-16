@@ -1,4 +1,5 @@
 <template>
+  <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage"></Loading>
   <div class="mt-4">
     <div class="d-flex justify-content-between">
       <p class="mb-0 px-2">本頁有 <span>{{ articles.length }}</span> 篇文章</p>
@@ -54,6 +55,11 @@
 import PaginationView from '@/components/PaginationView.vue'
 import ArticleModal from '@/components/ArticleModal.vue'
 import DelModal from '@/components/DelModal.vue'
+
+import { Toast } from '@/methods/swalToast'
+
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 const { VITE_PATH, VITE_URL } = import.meta.env
 export default {
   inject: ['$filters'],
@@ -62,6 +68,7 @@ export default {
       articles: [],
       pagination: {},
       isLoading: false,
+      fullPage: true,
       temArticle: {
         imagesUrl: [],
         tag: []
@@ -73,7 +80,8 @@ export default {
   components: {
     PaginationView,
     ArticleModal,
-    DelModal
+    DelModal,
+    Loading
   },
   methods: {
     getArticles (page = 1) {
@@ -84,6 +92,15 @@ export default {
         this.articles = res.data.articles
         this.pagination = res.data.pagination
         this.isLoading = false
+      })
+    },
+    openArticle (item) {
+      const url = `${VITE_URL}/api/${VITE_PATH}/admin/article/${item.id}`
+      this.axios.get(url).then((res) => {
+        console.log('response', res)
+        this.temArticle = { ...res.data.article }
+        this.isNew = false
+        this.$refs.articleModal.openModal()
       })
     },
     openArticles (action, item) {
@@ -107,15 +124,6 @@ export default {
         this.$refs.delModal.openModal()
       }
     },
-    openArticle (item) {
-      const url = `${VITE_URL}/api/${VITE_PATH}/admin/article/${item.id}`
-      this.axios.get(url).then((res) => {
-        console.log('response', res)
-        this.temArticle = { ...res.data.article }
-        this.isNew = false
-        this.$refs.articleModal.openModal()
-      })
-    },
     updateArticle () {
       let url = `${VITE_URL}/api/${VITE_PATH}/admin/article`
       let httpMethod = 'post'
@@ -127,15 +135,27 @@ export default {
       this.axios[httpMethod](url, { data: this.temArticle }).then((res) => {
         console.log(res.data)
         if (res.data.success) {
-          alert('文章已更新')
+          Toast.fire({
+            icon: 'success',
+            title: res.data.message
+          })
+          // alert('文章已更新')
           this.$refs.articleModal.hideModal()
           this.getArticles()
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: res.data.message
+          })
+          // alert(res.data.message)
         }
       })
         .catch((err) => {
-          console.log(err.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: err.response.data.message
+          })
+          // console.log(err.response.data.message)
         })
     },
     deleteArticle () {
@@ -143,15 +163,27 @@ export default {
       this.axios.delete(url).then((res) => {
         console.log(res.data)
         if (res.data.success) {
-          alert('文章已刪除')
+          Toast.fire({
+            icon: 'success',
+            title: '文章已刪除'
+          })
+          // alert('文章已刪除')
           this.$refs.delModal.hideModal()
           this.getArticles()
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: res.data.message
+          })
+          // alert(res.data.message)
         }
       })
         .catch((err) => {
-          console.log(err.response.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: err.response.data.message
+          })
+          // console.log(err.response.data.message)
         })
     },
     uploadImage (event) {
@@ -166,7 +198,11 @@ export default {
           this.temArticle.imageUrl = res.data.imageUrl
           this.imgUploading = false
         } else {
-          alert(res.data.message)
+          Toast.fire({
+            icon: 'error',
+            title: res.data.message
+          })
+          // alert(res.data.message)
           this.imgUploading = false
         }
       })

@@ -6,10 +6,6 @@ import VueAxios from 'vue-axios'
 // 加入 CKEditor
 import CKEditor from '@ckeditor/ckeditor5-vue'
 
-// this.$Loading.config(import Loading from 'vue-loading-overlay'
-// import Loading from 'vue-loading-overlay'
-// import 'vue-loading-overlay/dist/css/index.css'
-
 import './style.css'
 import './assets/all.scss'
 import App from './App.vue'
@@ -27,8 +23,7 @@ app
   .use(pinia)
   .use(router)
   .use(CKEditor)
+  // .use(Swal)
   .use(VueAxios, axios)
-  // .use(Loading.LoadingPlugin)
-  // .component('Loading', Loading.Component)
 
 app.mount('#app')

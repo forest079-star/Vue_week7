@@ -1,4 +1,5 @@
 <template>
+  <Loading v-model:active="isLoading" :can-cancel="true" :is-full-page="fullPage"></Loading>
   <div class="container">
     <div class="row row-cols-1 row-cols-md-2 g-4">
       <template v-for="article in articles" :key="article.id">
@@ -21,12 +22,15 @@
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/css/index.css'
 const { VITE_URL, VITE_PATH } = import.meta.env
 export default {
   data () {
     return {
       articles: [],
       isLoading: false,
+      fullPage: true,
       isNew: false,
       tempArticle: {}
     }
@@ -46,6 +50,9 @@ export default {
         this.$httpMessageState(error.response, '錯誤訊息')
       })
     }
+  },
+  components: {
+    Loading
   },
   mounted () {
     this.getArticles()

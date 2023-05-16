@@ -102,19 +102,18 @@
 </template>
 <script>
 import modalMixin from '@/mixins/modalMixin'
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
-import Font from '@ckeditor/ckeditor5-font/src/font'
-import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials'
-import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold'
-import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic'
-import LinkPlugin from '@ckeditor/ckeditor5-link/src/link'
-import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph'
-import Heading from '@ckeditor/ckeditor5-heading/src/heading'
-import List from '@ckeditor/ckeditor5-list/src/list'
-// import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/
-import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter'
-import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+// import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor'
+// import Font from '@ckeditor/ckeditor5-font/src/font'
+// import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials'
+// import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold'
+// import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic'
+// import LinkPlugin from '@ckeditor/ckeditor5-link/src/link'
+// import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph'
+// import Heading from '@ckeditor/ckeditor5-heading/src/heading'
+// import List from '@ckeditor/ckeditor5-list/src/list'
+// import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapter'
+// import ImageResize from '@ckeditor/ckeditor5-image/src/imageresize'
 export default {
   props: {
     article: {
@@ -137,28 +136,29 @@ export default {
     return {
       editor: ClassicEditor,
       editorConfig: {
-        plugins: [
-          Heading,
-          List,
-          Font,
-          EssentialsPlugin,
-          BoldPlugin,
-          ItalicPlugin,
-          LinkPlugin,
-          ParagraphPlugin,
-          UploadAdapter,
-          ImageResize
-        ],
-        toolbar: {
-          items: ['heading', '|', 'undo', 'redo', 'bold', 'italic', '|', 'fontsize', 'fontColor', 'fontBackgroundColor', '|', 'numberedList', 'bulletedList', 'link', 'uploadImage']
-        },
-        image: {
-          toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
-          styles: ['full', 'alignLeft', 'alignRight']
-        },
-        ckfinder: {
-          uploadUrl: 'https://vue3-course-api.hexschool.io/v2/api/ryanpro/admin/upload'
-        }
+        // plugins: [
+        //   Heading,
+        //   List,
+        //   Font,
+        //   EssentialsPlugin,
+        //   BoldPlugin,
+        //   ItalicPlugin,
+        //   LinkPlugin,
+        //   ParagraphPlugin,
+        //   UploadAdapter,
+        //   ImageResize
+        // ],
+        toolbar: []
+        // toolbar: {
+        //   items: ['heading', '|', 'undo', 'redo', 'bold', 'italic', '|', 'fontsize', 'fontColor', 'fontBackgroundColor', '|', 'numberedList', 'bulletedList', 'link', 'uploadImage']
+        // }
+        // image: {
+        //   toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+        //   styles: ['full', 'alignLeft', 'alignRight']
+        // },
+        // ckfinder: {
+        //   uploadUrl: 'https://vue3-course-api.hexschool.io/v2/api/ryanpro/admin/upload'
+        // }
       },
       modal: '',
       tempArticle: {
