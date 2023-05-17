@@ -3,6 +3,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   {
     path: '/login',
+    name: 'Login',
     component: () => import('../views/admin/LoginView.vue')
   },
   {
@@ -56,6 +57,7 @@ const routes = [
     path: '/:pathMatch(.*)',
     name: '404',
     component: () => import('@/views/NotFront.vue')
+    // redirect: { name: 'Login' },
   }
 ]
 
